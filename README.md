@@ -38,11 +38,11 @@ is parsed into:
 
 ---
 
-## ⚙️ Three Address Code (TAC)
-```
-t1 = B * B
-t2 = 4 * A * C
-Z = t1 - t2
+t1 = B * B       # t1 stores the square of B (B * B)
+t2 = 4 * A       # t2 stores the result of multiplying 4 and A (4 * A)
+t3 = t2 * C      # t3 stores the result of (4 * A) * C
+Z  = t1 - t3     # Z stores the final result: (B * B) - (4 * A * C)
+
 ```
 This intermediate representation helps bridge the gap between high-level source and low-level machine code.
 
