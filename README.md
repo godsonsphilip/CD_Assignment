@@ -37,6 +37,8 @@ is parsed into:
 ```
 
 ---
+## ⚙️ Three Address Code (TAC)
+ ```
 
 t1 = B * B       # t1 stores the square of B (B * B)
 t2 = 4 * A       # t2 stores the result of multiplying 4 and A (4 * A)
