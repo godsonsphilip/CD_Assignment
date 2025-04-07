@@ -167,10 +167,7 @@ Result Z = -44
 
 ---
 
-## 🔗 GitHub Repository
-[👉 Visit GitHub Repository](https://github.com/godsonsphilip/CD_Assignment)
 
----
 
 ⭐ If this helped you understand compiler construction better, consider giving the repo a star and trying your own custom instructions!
 
