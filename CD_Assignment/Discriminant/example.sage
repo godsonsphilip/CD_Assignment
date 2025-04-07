@@ -1,1 +1,0 @@
-Z = DISCRIMINANT A , B , C
