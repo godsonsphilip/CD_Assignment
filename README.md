@@ -1,104 +1,154 @@
+# 📘 Custom Instruction Compiler Enhancement – `DISC` for Discriminant Calculation
 
-# 📘 Custom Instruction: DISCRIMINANT - Compiler Design Assignment
+Welcome to the official repository for our **Compiler Design Assignment**, where we crafted a **custom instruction named `DISC`** to compute the discriminant of a quadratic equation using:
 
-Welcome to this compiler design assignment project! This walkthrough details the full implementation of a custom instruction `DISCRIMINANT`, which evaluates the **DISCRIMINANT** of a quadratic equation using the formula:
+> **Z = B × B - 4 × A × C**
 
-```
-Z = B^2 - 4 * A * C
-```
-
-This value helps determine the nature of roots of a quadratic equation `Ax² + Bx + C = 0`. The project shows how a compiler is modified to recognize a new instruction and generate intermediate as well as assembly code for it.
+This README offers a full walkthrough: from lexical analysis and parse trees to assembly generation and execution – all tailored for a better understanding and appreciation of compiler internals.
 
 ---
 
-## 🛠️ Objective
+## ✨ What’s This All About?
+This project demonstrates how to extend a compiler to support a **custom mathematical instruction**. We replaced the generic instruction `MULADD` with a newly designed instruction:
 
-**Design a custom compiler instruction** for computing the DISCRIMINANTriminant and show its impact through:
+### ✅ `DISC`: Computes the discriminant of a quadratic equation
+Formula:
+```
+Z = B * B - 4 * A * C
+```
+> 📌 Sample Equation: 3x² + 2x + 4 → Discriminant = 2² - 4×3×4 = 4 - 48 = -44
 
-- Tokenization
-- Parsing
-- Abstract Syntax Tree (AST)
-- Three Address Code (3AC)
-- Assembly Code Generation
-- Custom NASM Output
+This showcases how real-world compiler enhancement allows optimization, better semantics, and tighter integration for specific operations.
 
 ---
 
-## 📁 File Structure
-
+## 🌳 Parse Tree
+A single-line instruction like:
+```txt
+Z = DISC B , A , C ;
 ```
-.
-├── asmgen.h / asmgen.cpp         # Assembly code generation
-├── ast.h / ast.cpp               # AST representation & evaluator
-├── tokenizer.h / tokenizer.cpp   # Token definitions & tokenizer
-├── parser.h / parser.cpp         # Parser for DISCRIMINANT instruction
-├── main.cpp                      # Main I/O & compiler interface
-├── macros.inc                    # NASM macro definitions
-├── output.asm                    # Generated NASM Assembly
-├── outputs/
-│   ├── postfix.txt               # Postfix representation
-│   └── tac.txt                   # Three Address Code
-├── example.sage                  # Input source file
-└── README.md                     # Project documentation
+is parsed into:
 ```
-
----
-
-## 🌳 Parse Tree & Expression
-
-**Input:**  
-```
-Z = DISCRIMINANT B , A , C ;
-```
-
-**Parse Tree:**
-```
-     =
-   /   \
-  Z    DISCRIMINANT
+    =
+   / \
+  Z  DISC
        / | \
       B  A  C
 ```
 
 ---
 
-## 🔁 Three Address Code (TAC)
-
+## ⚙️ Three Address Code (TAC)
 ```
 t1 = B * B
 t2 = 4 * A * C
 Z = t1 - t2
 ```
+This intermediate representation helps bridge the gap between high-level source and low-level machine code.
 
 ---
 
-## 🪄 NASM Assembly (output.asm)
-
-This NASM assembly reads values for A, B, and C, computes the DISCRIMINANTriminant, and shows the result using both `printf` (terminal) and `MessageBoxA` (GUI popup).
-
-**MessageBox Output Example:**
-
+## 🛠️ File Structure
 ```
-📐 DISCRIMINANT = B² - 4AC
-📊 DISCRIMINANT = 16
-🔍 Real & Equal roots! ✔️
+📁 CD_Assignment
+├── main.cpp              → Entry point (C++)
+├── parser.h/.cpp         → Contains grammar parsing logic for DISC
+├── tokenizer.h/.cpp      → Lexical analysis
+├── asmgen.h/.cpp         → Assembly generator for x86 NASM
+├── macros.inc            → NASM I/O macros
+├── output.asm            → Generated Assembly file
+├── outputs/
+│   ├── tac.txt           → Three-address code output
+│   ├── postfix.txt       → Postfix representation
+│   └── tokens.txt        → Token stream
+├── example.sage          → Source code input (DISC instruction)
+└── README.md             → You’re here :)
 ```
 
 ---
 
-## 🚀 Running the Program
+## 🔁 Flow of Execution
+1. **Input**: Provide values for A, B, and C.
+2. **Lexical Analysis**: Tokenizes the custom `DISC` instruction.
+3. **Parsing**: Converts tokens to a parse tree.
+4. **TAC Generation**: Intermediate code using temp variables.
+5. **Assembly Generation**: Translates to NASM-compatible x86 code.
+6. **Execution**: Prints result to terminal and a MessageBox (Windows).
 
-1. Open the solution in an IDE (Visual Studio or any NASM-supported IDE).
-2. Provide input values when prompted.
-3. Observe the output in terminal and Windows message box.
+---
+
+## 📋 Prerequisites
+Install the following tools:
+
+### 🧰 Required Software & Why We Use Them
+- 🔧 **NASM** – Netwide Assembler: Used to assemble the low-level `.asm` file into object code.  
+  👉 [Download NASM](https://www.nasm.us/)
+  - *Why?* Converts our custom `DISC` logic into Windows-compatible machine code.
+
+- 🔗 **GoLink** – A lightweight Windows linker to bind object files with Windows DLLs.  
+  👉 [Download GoLink](https://www.godevtool.com/Golink.zip)
+  - *Why?* Helps link WinAPI functions like `MessageBoxA` into our NASM output.
+
+- 🪟 **Windows OS** – Required to use the `MessageBoxA` WinAPI for GUI output.
+  - *Why?* For fun and friendly visual results alongside terminal output!
+
+---
+
+## 🧑‍💻 Installation & Setup (via CMD)
+Make sure your terminal points to the project directory, then:
+
+### ⚙️ Compile the Assembly File
+```bash
+nasm -f win32 output.asm -o output.obj
+```
+
+### 🔗 Link Using GoLink
+```bash
+GoLink /console output.obj kernel32.dll user32.dll msvcrt.dll
+```
+
+### ▶️ Run the Executable
+```bash
+output.exe
+```
+
+> 💡 **TIP**: Add NASM and GoLink to your system PATH for smoother CLI usage.
+
+---
+
+## 💡 Why DISC? – Significance of This Custom Instruction
+✅ **Tailored Instruction**: Instead of using multiple MUL and ADD instructions, `DISC` condenses this into a semantic unit, providing better readability and abstraction.
+
+✅ **Optimization Friendly**: This can be optimized at the compiler backend for faster execution and smaller binary sizes.
+
+✅ **Domain-Specific Enhancement**: Since discriminants are common in quadratic problems, this instruction brings DSL-like power to our language.
+
+✅ **Pedagogical Clarity**: Great for understanding how high-level mathematical ideas map down to machine instructions.
+
+✅ **Compiler Design Practice**: Illustrates how to modify lexer, parser, intermediate code generator, and backend emitter.
+
+> 💬 The goal was to enhance the language and compiler to feel intuitive, powerful, and specialized. Mission accomplished! 🚀
+
+---
+
+## 📸 Program Output
+### Console:
+```
+Enter value for A: 3
+Enter value for B: 2
+Enter value for C: 4
+Result Z = -44
+```
+
+### MessageBox:
+🧮 *"📐 The discriminant is -44 📐\nThis is computed using Z = B² - 4AC"*
 
 ---
 
 ## 🔗 GitHub Repository
-
-Explore the full code and updates at:  
-👉 [https://github.com/godsonsphilip/CD_Assignment](https://github.com/godsonsphilip/CD_Assignment)
+[👉 Visit GitHub Repository](https://github.com/godsonsphilip/CD_Assignment)
 
 ---
 
-Made with ❤️ for Compiler Design.
+⭐ If this helped you understand compiler construction better, consider giving the repo a star and trying your own custom instructions!
+
