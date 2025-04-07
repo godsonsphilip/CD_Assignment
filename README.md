@@ -48,6 +48,28 @@ This intermediate representation helps bridge the gap between high-level source 
 
 ---
 
+## 🗃️ Pseudo Register Execution (Assembly Perspective)
+```
+; t1 = B * B
+mov eax, [B]       ; move value of B into register
+imul eax, [B]      ; multiply it with B (B * B)
+mov [t1], eax      ; store result in t1
+
+; t2 = 4 * A * C
+mov eax, 4         ; move 4 into register
+imul eax, [A]      ; multiply with A (4 * A)
+imul eax, [C]      ; multiply with C (4 * A * C)
+mov [t2], eax      ; store result in t2
+
+; Z = t1 - t2
+mov eax, [t1]      ; move t1 into register
+sub eax, [t2]      ; subtract t2 (t1 - t2)
+mov [Z], eax       ; store final result in Z
+```
+This showcases the exact pseudo-register movement used in our NASM output file – a precise realization of the `DISC` logic.
+
+---
+
 ## 🛠️ File Structure
 ```
 📁 CD_Assignment
@@ -145,7 +167,10 @@ Result Z = -44
 
 ---
 
+## 🔗 GitHub Repository
+[👉 Visit GitHub Repository](https://github.com/godsonsphilip/CD_Assignment)
 
+---
 
 ⭐ If this helped you understand compiler construction better, consider giving the repo a star and trying your own custom instructions!
 
